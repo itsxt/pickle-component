@@ -1,0 +1,41 @@
+/*
+ * @Author: itsxt 
+ * @Date: 2021-05-14 17:16:11 
+ * @Last Modified by: itsxt
+ * @Last Modified time: 2021-05-14 17:51:22
+ */
+
+
+.alert {
+  position: relative;
+  display: flex;
+  @include alert-style( lighten($primary, 40%), $primary);
+
+  .alert-close-icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    line-height: $line-height-sm;
+    margin-left: $alert-close-icon-margin-left;
+    outline: none;
+    overflow: hidden;
+    padding: 0;
+
+    .icon-close {
+      color: $gray-600;
+    }
+  }
+}
+
+.alert-danger {
+  @include alert-style( lighten($danger, 40%), $danger);
+}
+
+.alert-success {
+  @include alert-style( lighten($success, 50%), $success);
+}
+
+.alert-warning {
+  @include alert-style( lighten($warning, 40%), $warning);
+}

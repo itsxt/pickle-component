@@ -1,0 +1,69 @@
+/*
+ * @Author: itsxt 
+ * @Date: 2021-05-14 12:16:40 
+ * @Last Modified by: itsxt
+ * @Last Modified time: 2021-05-14 17:45:25
+ * 全局 mixins
+ */
+
+@mixin button-size($padding-y, $padding-x, $font-size, $border-radius) {
+  padding: $padding-y $padding-x;
+  font-size: $font-size;
+  border-radius: $border-radius;
+}
+
+@mixin button-style($background,
+  $border,
+  $color,
+  $hover-background: lighten($background, 7.5%),
+  $hover-border: lighten($border, 10%),
+  $hover-color: $color) {
+  color: $color;
+  background: $background;
+  border-color: $border;
+
+  &:hover,
+  &:focus,
+  &.focus {
+    color: $hover-color;
+    background: $hover-background;
+    border-color: $hover-border;
+  }
+
+  &:disabled,
+  &.disabled  {
+    color: $color;
+    background: $background;
+    border: $border;
+  }
+
+}
+
+@mixin alert-style($background, $border-color) {
+  align-items: center;
+  font-size: $font-size-base;
+  color: $body-color;
+  line-height: $line-height-base;
+  border-radius: $border-radius;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  background-color: $background;
+  border: $border-width solid $border-color;
+  
+  .alert-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &.alert-with-description {
+    padding: $alert-with-description-padding;
+    align-items: flex-start;
+    .alert-message {
+      margin-bottom: $alert-message-margin-bottom;
+    }
+  }
+
+  .alert-close-icon {
+    margin-left: $alert-close-icon-margin-left;
+  }
+}
