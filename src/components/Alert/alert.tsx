@@ -2,7 +2,7 @@
  * @Author: itsxt 
  * @Date: 2021-05-14 16:30:19 
  * @Last Modified by: itsxt
- * @Last Modified time: 2021-05-14 17:57:20
+ * @Last Modified time: 2021-05-19 12:09:10
  */
 import React, { useState } from 'react';
 import classNames from 'classnames';
@@ -14,7 +14,7 @@ export enum AlertType {
   Warning = 'warning'
 }
 
-interface AlertProps {
+export interface AlertProps {
   type          ?:  string;
   message       :  string;
   className     ?: string;
