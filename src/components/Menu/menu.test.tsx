@@ -5,13 +5,13 @@ import MenuItem from './menuItem';
 import SubMenu from './subMenu';
 
 const testProps: MenuProps = {
-  defaultIndex: 0,
+  defaultIndex: '0',
   onSelect: jest.fn(),
   className: 'test'
 }
 
 const testVerProps: MenuProps = {
-  defaultIndex: 0,
+  defaultIndex: '0',
   mode: 'vertical',
 }
 
@@ -21,7 +21,7 @@ const NiceMenu = (props: MenuProps) => {
       <MenuItem>active</MenuItem>
       <MenuItem disable>disable</MenuItem>
       <MenuItem>xy</MenuItem>
-      <SubMenu index={0} title="xyz">
+      <SubMenu index='0' title="xyz">
         <MenuItem>dropdown 1</MenuItem>
         <MenuItem>dropdown 2</MenuItem>
         <MenuItem>dropdown 3</MenuItem>
@@ -30,6 +30,8 @@ const NiceMenu = (props: MenuProps) => {
     </Menu>
   )
 }
+
+// TODO: 在测试用例中添加style
 
 // before 在case开始之前执行
 let wrapper: RenderResult, menuElement: HTMLElement, activeElement: HTMLElement, disableElement: HTMLElement;
@@ -56,10 +58,10 @@ describe('test menu and menuItem components', () =>{
     fireEvent.click(thirdItem)
     expect(thirdItem).toHaveClass('is-active')
     expect(activeElement).not.toHaveClass('is-active')
-    expect(testProps.onSelect).toHaveBeenCalledWith(2)
+    expect(testProps.onSelect).toHaveBeenCalledWith('2')
     fireEvent.click(disableElement)
     expect(disableElement).not.toHaveClass('is-active')
-    expect(testProps.onSelect).not.toHaveBeenCalledWith(1)
+    expect(testProps.onSelect).not.toHaveBeenCalledWith('1')
   })
 
   it('should render vertical mode when mode is set to vertical', () =>{

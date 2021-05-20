@@ -1,0 +1,35 @@
+.pickle-tabs {
+  box-sizing: border-box;
+  color: $gray-900;
+
+  .tabs-tab-nav {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 16px;
+
+    .tabs-tab-btn {
+      padding: 12px 0;
+      margin-left: 32px;
+      cursor: pointer;
+      transition: $menu-transition;
+      border-bottom: $menu-item-active-border-width solid transparent;
+      &:first-child {
+        margin: 0;
+      }
+      &.tabs-tab-active, &:hover {
+        color: $menu-item-active-color;
+        border-bottom: $menu-item-active-border-width solid $menu-item-active-color;
+      }
+    }
+  }
+
+  .tabs-content {
+    display: flex;
+
+    .tabs-tabpane{
+      width: 100%;
+      flex: none;
+    }
+  }
+}
