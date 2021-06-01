@@ -1,4 +1,7 @@
 import React from 'react';
+import Icon from './components/Icon/Icon'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import Button, { ButtonSize, ButtonType } from './components/Button/button';
 import Alert, { AlertType } from './components/Alert/alert';
 import Menu from './components/Menu/menu';
@@ -6,12 +9,16 @@ import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/subMenu';
 import Tabs from './components/Tabs/tabs';
 import TabItem from './components/Tabs/tabItem';
-
 import './App.css'
+
+library.add(fas)
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+      <Icon theme="danger" icon="coffee"/>
+      <Icon theme="primary" icon="arrow-alt-circle-down"/>
+      {/* <FontAwesomeIcon icon={faCoffee} spin/> */}
         <Button className="custom"> hello </Button>
         <Button disable> hello </Button>
         <Button btnType={ButtonType.Primary} size={ButtonSize.Large}> hello </Button>

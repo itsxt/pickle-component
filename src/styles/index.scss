@@ -2,7 +2,7 @@
  * @Author: itsxt 
  * @Date: 2021-05-14 14:51:14 
  * @Last Modified by: itsxt
- * @Last Modified time: 2021-05-20 16:32:41
+ * @Last Modified time: 2021-06-01 15:51:06
  */
 // config
 @import 'variables';
@@ -12,6 +12,9 @@
 
 // mixin
 @import 'mixins';
+
+// transition
+@import 'animation';
 
 // button
 @import '../components/Button/style';
@@ -24,3 +27,7 @@
 
 // Tabs
 @import '../components/Tabs/style';
+
+// icon
+@import '../components/Icon/style';
+

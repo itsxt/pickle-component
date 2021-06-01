@@ -2,7 +2,7 @@
  * @Author: itsxt 
  * @Date: 2021-05-19 17:21:44 
  * @Last Modified by: itsxt
- * @Last Modified time: 2021-05-19 17:50:49
+ * @Last Modified time: 2021-06-01 17:35:42
  */
 // TODO: subMenu组件编写
 
@@ -10,6 +10,8 @@ import React, { FunctionComponentElement, useContext, useState } from 'react';
 import classNames from 'classnames';
 import { MenuContext } from './menu';
 import { MenuItemProps } from './menuItem';
+import { CSSTransition } from 'react-transition-group';
+import Icon from '../Icon/Icon';
 
 export interface ISubmenuProps {
   index       ?: string;
@@ -25,7 +27,9 @@ const SubMenu: React.FC<ISubmenuProps> = (props) => {
   const [menuOpen, setMenuOpen] = useState(isOpen)
   
   const classes = classNames('menu-item submenu-item', claseName, {
-    'is-active': context.index === index
+    'is-active': context.index === index,
+    'is-opened': menuOpen,
+    'is-vertical': context.mode === 'vertical'
   })
 
   const handleClick = (e: React.MouseEvent) => {
@@ -65,17 +69,30 @@ const SubMenu: React.FC<ISubmenuProps> = (props) => {
         console.error('Warning: SubMenu has a child which is not a MenuIten components')
       }
     })
-
+    
     return (
-      <ul className={submenuClass}>
-        {childComponents}
-      </ul>
+      <>
+      <CSSTransition 
+        in={menuOpen} 
+        timeout={300} 
+        classNames="zoom-in-top"
+        appear 
+        unmountOnExit={true}
+      >
+        <ul className={submenuClass}>
+          {childComponents}
+        </ul>
+      </CSSTransition>
+      </>
     )
   }
 
   return (
     <li key={index} className={classes} {...hoverEvent}>
-      <div className="submenu-title" {...clickEvent}>{ title }</div>
+      <div className="submenu-title" {...clickEvent}>
+        { title }
+        <Icon  icon="angle-down" className="arrow-icon"/>
+      </div>
       { renderChildren() }
     </li>
   )
