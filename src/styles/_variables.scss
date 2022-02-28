@@ -286,19 +286,3 @@ $progress-bg:                       $gray-200 !default;
 $progress-border-radius:            $border-radius !default;
 $progress-bar-color:                $white !default;
 $progress-bar-transition:           width .6s ease !default;
-
-// Alert
-$alert-font-weight:     400;
-$alert-padding-y:       .5rem !default;
-$alert-padding-x:       .85rem !default;
-$alert-font-family:     $font-family-base !default;
-$alert-font-size:       $font-size-base !default;
-$alert-line-height:     $line-height-base !default;
-$alert-border-width:    $border-width !default;
-$alert-border-color:    $border-color !default;
-$alert-with-description-padding:       .85rem !default;
-
-// Alert margin
-$alert-margin-bottom:           1rem;
-$alert-message-margin-bottom:   .28rem;
-$alert-close-icon-margin-left:  .57rem;
