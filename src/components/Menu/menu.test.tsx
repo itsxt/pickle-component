@@ -1,73 +1,126 @@
-import React from 'react';
-import { fireEvent, render, RenderResult, cleanup } from '@testing-library/react'; //cleanup 清除
-import Menu, { MenuProps } from './menu';
-import MenuItem from './menuItem';
-import SubMenu from './subMenu';
-
+import React from 'react'
+import { render, RenderResult, fireEvent, wait } from '@testing-library/react'
+import Menu, {MenuProps} from './menu'
+import MenuItem from './menuItem'
+import SubMenu from './subMenu'
+jest.mock('../Icon/icon', () => {
+  return () => {
+    return <i className="fa" />
+  }
+})
+jest.mock('react-transition-group', () => {
+  return {
+    CSSTransition: (props: any) => {
+      return props.children
+    }
+  }
+})
 const testProps: MenuProps = {
   defaultIndex: '0',
   onSelect: jest.fn(),
   className: 'test'
 }
-
 const testVerProps: MenuProps = {
   defaultIndex: '0',
   mode: 'vertical',
+  defaultOpenSubMenus: ['4']
 }
-
-const NiceMenu = (props: MenuProps) => {
+const generateMenu = (props: MenuProps) => {
   return (
     <Menu {...props}>
-      <MenuItem>active</MenuItem>
-      <MenuItem disable>disable</MenuItem>
-      <MenuItem>xy</MenuItem>
-      <SubMenu index='0' title="xyz">
-        <MenuItem>dropdown 1</MenuItem>
-        <MenuItem>dropdown 2</MenuItem>
-        <MenuItem>dropdown 3</MenuItem>
-        <MenuItem>dropdown 4</MenuItem>
+      <MenuItem>
+        active
+      </MenuItem>
+      <MenuItem disabled>
+        disabled
+      </MenuItem>
+      <MenuItem>
+        xyz
+      </MenuItem>
+      <SubMenu title="dropdown">
+        <MenuItem>
+          drop1
+        </MenuItem>
+      </SubMenu>
+      <SubMenu title="opened">
+        <MenuItem>
+          opened1
+        </MenuItem>
       </SubMenu>
     </Menu>
   )
 }
-
-// TODO: 在测试用例中添加style
-
-// before 在case开始之前执行
-let wrapper: RenderResult, menuElement: HTMLElement, activeElement: HTMLElement, disableElement: HTMLElement;
-
-describe('test menu and menuItem components', () =>{
+const createStyleFile = () => {
+  const cssFile: string = `
+    .viking-submenu {
+      display: none;
+    }
+    .viking-submenu.menu-opened {
+      display:block;
+    }
+  `
+  const style = document.createElement('style')
+  style.type = 'text/css'
+  style.innerHTML = cssFile
+  return style
+}
+let wrapper: RenderResult, wrapper2: RenderResult, menuElement: HTMLElement, activeElement: HTMLElement, disabledElement: HTMLElement
+describe('test Menu and MenuItem component in default(horizontal) mode', () => {
   beforeEach(() => {
-    wrapper = render(NiceMenu(testProps))
-    menuElement = wrapper.getByTestId('test-menu')
-    // wrapper.container.getElementsByClassName  也可这么拿 container 为htmlelement 节点
+    wrapper = render(generateMenu(testProps))
+    wrapper.container.append(createStyleFile())
+    menuElement= wrapper.getByTestId('test-menu')
     activeElement = wrapper.getByText('active')
-    disableElement = wrapper.getByText('disable')
+    disabledElement = wrapper.getByText('disabled')
   })
-
   it('should render correct Menu and MenuItem based on default props', () => {
     expect(menuElement).toBeInTheDocument()
-    expect(menuElement).toHaveClass('pickle-menu test')
-    expect(menuElement.getElementsByTagName('li').length).toEqual(8)
+    expect(menuElement).toHaveClass('viking-menu test')
+    expect(menuElement.querySelectorAll(':scope > li').length).toEqual(5)
     expect(activeElement).toHaveClass('menu-item is-active')
-    expect(disableElement).toHaveClass('menu-item is-disable')
+    expect(disabledElement).toHaveClass('menu-item is-disabled')
   })
-
   it('click items should change active and call the right callback', () => {
-    const thirdItem = wrapper.getByText('xy')
+    const thirdItem = wrapper.getByText('xyz')
     fireEvent.click(thirdItem)
     expect(thirdItem).toHaveClass('is-active')
     expect(activeElement).not.toHaveClass('is-active')
     expect(testProps.onSelect).toHaveBeenCalledWith('2')
-    fireEvent.click(disableElement)
-    expect(disableElement).not.toHaveClass('is-active')
+    fireEvent.click(disabledElement)
+    expect(disabledElement).not.toHaveClass('is-active')
     expect(testProps.onSelect).not.toHaveBeenCalledWith('1')
   })
-
-  it('should render vertical mode when mode is set to vertical', () =>{
-    cleanup();
-    const wrapper = render(NiceMenu(testVerProps))
-    const menuElement = wrapper.getByTestId('test-menu')
+  it('should show dropdown items when hover on subMenu', async () => {
+    expect(wrapper.queryByText('drop1')).not.toBeVisible()
+    const dropdownElement = wrapper.getByText('dropdown')
+    fireEvent.mouseEnter(dropdownElement)
+    await wait(() => {
+      expect(wrapper.queryByText('drop1')).toBeVisible()
+    })
+    fireEvent.click(wrapper.getByText('drop1'))
+    expect(testProps.onSelect).toHaveBeenCalledWith('3-0')
+    fireEvent.mouseLeave(dropdownElement)
+    await wait(() => {
+      expect(wrapper.queryByText('drop1')).not.toBeVisible()
+    })
+  })
+})
+describe('test Menu and MenuItem component in vertical mode', () => {
+  beforeEach(() => {
+    wrapper2 = render(generateMenu(testVerProps))
+    wrapper2.container.append(createStyleFile())
+  })
+  it('should render vertical mode when mode is set to vertical', () => {
+    const menuElement = wrapper2.getByTestId('test-menu')
     expect(menuElement).toHaveClass('menu-vertical')
+  })
+  it('should show dropdown items when click on subMenu for vertical mode', () => {
+    const dropDownItem = wrapper2.queryByText('drop1')
+    expect(dropDownItem).not.toBeVisible()
+    fireEvent.click(wrapper2.getByText('dropdown'))
+    expect(dropDownItem).toBeVisible()
+  })
+  it('should show subMenu dropdown when defaultOpenSubMenus contains SubMenu index', () => {
+    expect(wrapper2.queryByText('opened1')).toBeVisible()
   })
 })

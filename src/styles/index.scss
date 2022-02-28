@@ -1,33 +1,33 @@
-/*
- * @Author: itsxt 
- * @Date: 2021-05-14 14:51:14 
- * @Last Modified by: itsxt
- * @Last Modified time: 2021-06-01 15:51:06
- */
 // config
-@import 'variables';
+@import "variables";
 
-// layout
-@import 'reboot';
+//layout
+@import "reboot";
 
-// mixin
-@import 'mixins';
+//mixin
+@import "mixin";
 
-// transition
-@import 'animation';
-
+// animation
+@import "animation";
 // button
-@import '../components/Button/style';
 
-// alert
-@import '../components/Alert/style';
+@import "../components/Button/style";
 
 // menu
-@import '../components/Menu/style';
 
-// Tabs
-@import '../components/Tabs/style';
+@import "../components/Menu/style";
 
 // icon
-@import '../components/Icon/style';
+@import "../components/Icon/style";
 
+//input
+@import "../components/Input/style";
+
+//auto-complete
+@import "../components/AutoComplete/style";
+
+//upload
+@import "../components/Upload/style";
+
+//progress
+@import "../components/Progress/style";
