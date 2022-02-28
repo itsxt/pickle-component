@@ -1,6 +1,6 @@
 /*
- * @Author: itsxt 
- * @Date: 2021-05-19 17:21:44 
+ * @Author: itsxt
+ * @Date: 2021-05-19 17:21:44
  * @Last Modified by: itsxt
  * @Last Modified time: 2021-06-01 17:35:42
  */
@@ -16,17 +16,17 @@ import Icon from '../Icon/Icon';
 export interface ISubmenuProps {
   index       ?: string;
   title       : string;
-  claseName ?: string;
+  className ?: string;
 }
 
 const SubMenu: React.FC<ISubmenuProps> = (props) => {
   const context = useContext(MenuContext)
-  const { index, children, title, claseName } = props
-  const openSubmenu = context.defalutOpenSubMenus as  Array<string>;
+  const { index, children, title, className } = props
+  const openSubmenu = context.defaultOpenSubMenus as  Array<string>;
   const isOpen = (index && context.mode === 'vertical') ? openSubmenu.includes(index) : false;
   const [menuOpen, setMenuOpen] = useState(isOpen)
-  
-  const classes = classNames('menu-item submenu-item', claseName, {
+
+  const classes = classNames('menu-item submenu-item', className, {
     'is-active': context.index === index,
     'is-opened': menuOpen,
     'is-vertical': context.mode === 'vertical'
@@ -55,28 +55,28 @@ const SubMenu: React.FC<ISubmenuProps> = (props) => {
   } : {}
 
   const submenuClass = classNames('pickle-submenu', {
-    'menu-opened': menuOpen === true
+    'menu-opened': menuOpen
   })
 
   const renderChildren = () => {
     const childComponents = React.Children.map(children, (child, i) => {
-      
+
       const childElement = child as FunctionComponentElement<MenuItemProps>
-      
+
       if(childElement.type.displayName === 'MenuItem') {
         return React.cloneElement(childElement, { index: `${index}-${i}` })
       } else {
         console.error('Warning: SubMenu has a child which is not a MenuIten components')
       }
     })
-    
+
     return (
       <>
-      <CSSTransition 
-        in={menuOpen} 
-        timeout={300} 
+      <CSSTransition
+        in={menuOpen}
+        timeout={300}
         classNames="zoom-in-top"
-        appear 
+        appear
         unmountOnExit={true}
       >
         <ul className={submenuClass}>

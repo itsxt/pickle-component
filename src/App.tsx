@@ -28,9 +28,9 @@ function App() {
 
 
         <div className="alert-box">
-          <Alert message="1234"></Alert>
-          <Alert message="1234" description="啊哈哈哈哈哈哈"></Alert>
-          <Alert message="1234" description="啊哈哈哈哈哈哈" type={ AlertType.Danger} closable={false}></Alert>
+          <Alert message="1234" />
+          <Alert message="1234" description="啊哈哈哈哈哈哈"/>
+          <Alert message="1234" description="啊哈哈哈哈哈哈" type={ AlertType.Danger} closable={false} />
         </div>
 
         <div>
@@ -45,7 +45,7 @@ function App() {
             </SubMenu>
           </Menu>
 
-          <Menu defaultIndex='0' mode="vertical" onSelect={ (index)=> {alert(index)} } defalutOpenSubMenus={['3']}>
+          <Menu defaultIndex='0' mode="vertical" onSelect={ (index)=> {alert(index)} } defaultOpenSubMenus={['3']}>
             <MenuItem>1</MenuItem>
             <MenuItem disable>2</MenuItem>
             <MenuItem>3</MenuItem>
@@ -62,7 +62,7 @@ function App() {
             <TabItem tab="1234" keys="3">page 3</TabItem>
             <TabItem tab="1234" keys="4">page 4</TabItem>
           </Tabs>
-          
+
         </div>
       </header>
     </div>

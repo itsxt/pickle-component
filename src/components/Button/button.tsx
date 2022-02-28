@@ -1,20 +1,20 @@
 /*
- * @Author: itsxt 
- * @Date: 2021-05-14 15:36:04 
+ * @Author: itsxt
+ * @Date: 2021-05-14 15:36:04
  * @Last Modified by: itsxt
  * @Last Modified time: 2021-05-14 16:30:01
  */
 import React from 'react';
 import classNames from 'classnames';
 
-export enum ButtonSize { 
+export enum ButtonSize {
   Large = 'lg',
   Small = 'sm'
 }
 
 export enum ButtonType {
   Primary = 'primary',
-  Defalut = 'default',
+  Default = 'default',
   Danger  = 'danger',
   Link    = 'link'
 }
@@ -33,7 +33,7 @@ type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLElemen
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { 
+  const {
     btnType,
     disable,
     size,
@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = (props) => {
    } = props
 
   //  btn, btn-lg, btn-sm, btn-primary
-  const classes = classNames('btn', className, { 
+  const classes = classNames('btn', className, {
     [`btn-${btnType}`]: btnType,
     [`btn-${size}`]: size,
     'disable': (btnType === ButtonType.Link) && disable
@@ -52,8 +52,8 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   if(btnType === ButtonType.Link  && href) {
     return (
-      <a 
-        href={href} 
+      <a
+        href={href}
         className={classes}
         {...restProps}
       >
@@ -63,7 +63,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   } else {
 
     return (
-      <button 
+      <button
         className={classes}
         disabled={disable}
         {...restProps}
@@ -76,7 +76,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
 Button.defaultProps = {
   disable: false,
-  btnType: ButtonType.Defalut
+  btnType: ButtonType.Default
 }
 
 export default Button;
